@@ -2,14 +2,41 @@
 <html>
 
 <head>
-	<title>Ejemplo básico</title>
+	<title>Ejemplo básico</title   >
 	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="css/index.css">
 </head>
 
-<body>
-	<h1>La aplicación esta corriendo!</h1>
+<body class="body">
+	<!-- <h1>La aplicación esta corriendo!</h1> -->
+	<nav class="nav"></nav>
 
-	<script src="./index.js" type="module"></script>
+	<section>
+		<div class="div-txt">
+			<h1 class="tareasTxt">Tareas por hacer</h1>
+		</div>
+		<div class="container-btn">
+			<div class="po-btn">
+				<div><input id="contenido-txt" class="inp" type="text" placeholder="Escribe tu tarea"></div>
+				<div><button id="btn" class="btn">Agregar</button></div>
+			</div>
+			<div class="po-circle">
+				<div>
+					<h2 class="h2-circle-txt">Tareas <br> completadas</h2>
+				</div>
+				<div class="circle-c">
+					<h4 id="contador" class="contenido-circle">0</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div id="contanedor-tareas" class="container-tareas"></div>
+		</div>
+	</section>
+	
+	<script src="src/index.js" type="module"></script>
+
 </body>
 
 </html>
