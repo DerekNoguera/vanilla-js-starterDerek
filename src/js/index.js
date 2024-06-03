@@ -7,7 +7,7 @@ let contador = document.getElementById("contador");
 let contenedorTareas = document.getElementById("contanedor-tareas")
 
 // Evento de click para el boton para que cree div, un checkbox, un h2 y un boton de eleminar
-btn.addEventListener("click", (checkbox, divs) => {
+btn.addEventListener("click", () => {
 
     if (inputTarea.value.trim() === "") {
         alert("No puedes crear una tarea vacia");
@@ -34,28 +34,36 @@ btn.addEventListener("click", (checkbox, divs) => {
         eliminar.className = "eliminar";
         contenedor.appendChild(eliminar)
         eliminar.addEventListener("click", () => {
-            contenedorTareas.removeChild(contenedor);
+            contenedorTareas.removeChild(contenedor); 
+        
             return divs, checkbox
         }) 
+
+        const postTaks = async () => { // funcion para recibir la apy
+            try {
+                const response = await fetch('http://localhost:3000/api/task', {
+                    method: 'POST', // metodo post para que se haga un post de lo que añadi
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        Task: inputTarea.value, // task va a ser igual a mi input que mi input es inputTarea.value, 
+                    })
+                });
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        postTaks()
         inputTarea.value = "";
-        //limpia el input una vez que se crea la tarea
+        //limpia el input cuando se crea la tarea
     }
 });
+
 inputTarea.addEventListener("keypress", (event) => {   // un add eventen listener a el input de texto, de Presionar Key
     if (event.key === "Enter") { // si event.key es === a Enter osea a la key "Enter" que presione
         btn.click(); // se va a ejecutar el addEventListener btnAddEventListener/btn.click()
     }
 });
-
-// async function getFetch() {
-//     try {
-//       const response = await fetch('http://localhost:3000/api/task')
-//       const data = await response.json(); 
-//       console.log(data);
-//     } catch (error) {   
-//         console.log("error")
-//     }
-//   }
-  
-//   getFetch()
-

@@ -112,6 +112,7 @@
     height: 56vh;
     width: 92%;
     margin-left: 3%;
+    overflow: auto;
 }
 
 .container-tareas {
