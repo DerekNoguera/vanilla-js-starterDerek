@@ -33,11 +33,36 @@ btn.addEventListener("click", () => {
         eliminar.src = "img/eliminar.png"
         eliminar.className = "eliminar";
         contenedor.appendChild(eliminar)
+
+        const deleteTask = async () => {
+            try {
+                const deletResponse = await fetch("http://localhost:3000/api/task");
+                const data = await deletResponse.json();
+                data.forEach(async (e) => {
+                    if (e.id) {
+                        try {
+                            const deleteResponse = await fetch(`http://localhost:3000/api/task/${e.id}`, {
+                                method: 'DELETE'
+                            });
+                            if (deleteResponse.ok) {
+                                contenedorTareas.removeChild(contenedor);
+                                console.log("Tarea eliminada con ID:", e.id);
+                            } else {
+                                console.error("error:", e.id);
+                            }
+                        } catch (error) {
+                            console.error("error", e.id,);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
         eliminar.addEventListener("click", () => {
-            contenedorTareas.removeChild(contenedor); 
-        
-            return divs, checkbox
-        }) 
+            deleteTask()
+        });
 
         const postTaks = async () => { // funcion para recibir la apy
             try {
@@ -53,7 +78,7 @@ btn.addEventListener("click", () => {
                 const data = await response.json();
                 console.log(data);
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
         }
         postTaks()
@@ -67,3 +92,23 @@ inputTarea.addEventListener("keypress", (event) => {   // un add eventen listene
         btn.click(); // se va a ejecutar el addEventListener btnAddEventListener/btn.click()
     }
 });
+
+// const deleteTaks = async () => {
+//     const deleteResponse = await fetch('http://localhost:3000/api/task')
+//     const data = await deleteResponse.json()
+//     data.forEach(e => {
+//         let id = e.id
+//         console.log(id)
+//         try {
+//             const deleteResponse = await fetch(`http://localhost:3000/api/task/`, {
+//                 method: 'DELETE'
+//             });
+//             if (deleteResponse.ok) {
+//                 contenedorTareas.removeChild(contenedor);
+//             } else {
+//                 console.error("Error deleting");
+//             }
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     });
