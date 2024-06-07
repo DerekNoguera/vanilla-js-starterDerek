@@ -17,12 +17,12 @@ btn.addEventListener("click", async () => {          // funcion async para que p
             console.log("hola", res.length)
             sinT.innerHTML = ""
         }
-        await perrito();                            // lo mismo con cargar tareas
+        await actualizar();                            // lo mismo con cargar tareas
         inputTarea.value = ""
     }
 })
 
-const perrito = async () => {                        // funcion async para poder llamar las promesas
+const actualizar = async () => {                        // funcion async para poder llamar las promesas
     contador.textContent = 0
     const data = await getTask();
     contenedorTareas.innerHTML = "";
@@ -109,6 +109,6 @@ inputTarea.addEventListener("keypress", (event) => {
         btn.click(); // se va a ejecutar el addEventListener btnAddEventListener/btn.click()
     }
 });
-window.addEventListener("load", () => {// recarga la pagina para que se actualice perrito
-    perrito()
+window.addEventListener("load", () => {// recarga la pagina para que se actualice actualizar
+    actualizar()
 })
