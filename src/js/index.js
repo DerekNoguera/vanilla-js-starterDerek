@@ -4,47 +4,41 @@ import { postTaks, getTask, deleteTask, putTask, putTask2 } from "./api.js";
 let inputTarea = document.getElementById("contenido-txt");
 let btn = document.getElementById("btn");
 let contador = document.getElementById("contador");
+let sinT = document.getElementById("sinT")
 let contenedorTareas = document.getElementById("contanedor-tareas");
-let sinTarea = document.createElement("h1")
 contador.textContent = 0
-// const conta = async () => {
-//     await putTask(contador.textContent)
-// }
-// conta(contador)
 
-// sinTarea.className = "tarea"
-// sinTarea.innerHTML = "No existen tareas Creadas"
-// contenedorTareas.appendChild(sinTarea)
-
-btn.addEventListener("click", async () => { // funcion async para que pueda ejecutar mis promesas
+btn.addEventListener("click", async () => {          // funcion async para que pueda ejecutar mis promesas
     if (inputTarea.value.trim() === "") {
         alert("Ingrese un Texto");
     } else {
-
-        await postTaks(); // si es else se va a ejecurtar el subir tareas
-        await perrito(); // lo mismo con cargar tareas
+        let res = await postTaks();// si es else se va a ejecurtar el subir tareas
+        if (res.length > 0) {
+            console.log("hola", res.length)
+            sinT.innerHTML = ""
+        }
+        await perrito();                            // lo mismo con cargar tareas
         inputTarea.value = ""
     }
 })
 
-const perrito = async () => { // funcion async para poder llamar las promesas
+const perrito = async () => {                        // funcion async para poder llamar las promesas
     contador.textContent = 0
     const data = await getTask();
     contenedorTareas.innerHTML = "";
     data.forEach(e => {
-        console.log(e.id);
+        sinT.innerHTML = ""
         let contenedor = document.createElement("div");
         contenedor.className = "contenedor";
-
 
         var checkbox = document.createElement("input");
         checkbox.className = "checkbox";
         checkbox.type = "checkbox";
         contenedor.appendChild(checkbox);
+
         checkbox.id = e.id
         let cid = checkbox.id
         checkbox.addEventListener('click', async () => {
-
             if (checkbox.checked) {
                 putTask2(cid, "completo")
             } else {
@@ -52,17 +46,13 @@ const perrito = async () => { // funcion async para poder llamar las promesas
             }
             location.reload()
         });
-        if (e.check === "completo") {
 
+        if (e.check === "completo") {
             checkbox.checked = true
             if (checkbox.checked) {
                 contador.textContent++
-            } else {
-                contador.textContent--
             }
         }
-        // let divs = document.createElement("input");
-        // divs.type ="text"
         let divs = document.createElement("h2");
         divs.className = "tareas";
         divs.innerHTML = e.Task;
@@ -82,20 +72,19 @@ const perrito = async () => { // funcion async para poder llamar las promesas
                         divs.textContent = inputEdit.value
                         let parametroDivs = divs.textContent
                         divs.id = e.id
+
                         let idPutTask = divs.id
                         contenedor.removeChild(inputEdit)
-
                         console.log(parametroDivs)
-                        putTask(idPutTask, parametroDivs)
+                        putTask(idPutTask,parametroDivs)
                     }
-
                 }
             })
         })
-
         let eliminar = document.createElement("img");
         eliminar.src = "https://img.icons8.com/?size=60&id=67884&format=png"
         eliminar.alt = "error"
+
         eliminar.className = "eliminar";
         eliminar.dataset.taskId = e.id; // el dataset es propio de HTML para poder guardar y leer datos entonces contenedor
         // dataset.taskId va a ser igual a el ID 
@@ -112,6 +101,7 @@ const perrito = async () => { // funcion async para poder llamar las promesas
         contenedorTareas.appendChild(contenedor);
     });
 };
+
 inputTarea.addEventListener("keypress", (event) => {
     // un add eventen listener a el input de texto, de Presionar Key
     if (event.key === "Enter") {
@@ -122,4 +112,3 @@ inputTarea.addEventListener("keypress", (event) => {
 window.addEventListener("load", () => {// recarga la pagina para que se actualice perrito
     perrito()
 })
-
