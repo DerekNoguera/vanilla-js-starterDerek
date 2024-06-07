@@ -1,6 +1,5 @@
 
 // import { inputTarea } from "./index.js";
-
 const getTask = async () => {
     try {
         const response = await fetch('http://localhost:3000/api/task')
@@ -9,7 +8,6 @@ const getTask = async () => {
     } catch (error) {
         console.error(error)
     }
-
 }
 let inputTarea = document.getElementById("contenido-txt");
 const postTaks = async () => { // funcion para recibir la apy
@@ -25,7 +23,7 @@ const postTaks = async () => { // funcion para recibir la apy
             })
         });
         const data = await response.json();
-        console.log(data);
+        return data
     } catch (error) {
         console.error(error)
     }
@@ -40,14 +38,12 @@ const putTask = async (cid, parametroDivs) => { // funcion para recibir la apy
             },
             body: JSON.stringify({
                 Task: parametroDivs,
-                
             })
         });
         const data = await response.json();
         console.log(data);
 
     } catch (error) {
-
     }
 }
 const putTask2 = async (cid, completo) => { // funcion para recibir la apy
@@ -58,20 +54,14 @@ const putTask2 = async (cid, completo) => { // funcion para recibir la apy
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                check: completo
-                
+                check: completo    
             })
         });
         const data = await response.json();
         console.log(data);
-
     } catch (error) {
-
     }
 }
-
-
-
 const deleteTask = async (ID) => {
     try {
         const deleteResponse = await fetch(`http://localhost:3000/api/task/${ID}`, {
