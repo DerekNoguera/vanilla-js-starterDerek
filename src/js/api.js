@@ -1,7 +1,7 @@
 
 // import { inputTarea } from "./index.js";
 const getTask = async () => {
-    try {
+    try { // metodo GET
         const response = await fetch('http://localhost:3000/api/task')
         const data = await response.json();
         return data
@@ -32,7 +32,7 @@ const putTask = async (cid, parametroDivs) => { // funcion para recibir la apy
     console.log(parametroDivs)
     try {
         const response = await fetch(`http://localhost:3000/api/task/` + cid, {
-            method: 'PUT',
+            method: 'PUT', // metodo PUT para editar el valor de el input como completo o incompleto
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -49,7 +49,7 @@ const putTask = async (cid, parametroDivs) => { // funcion para recibir la apy
 const putTask2 = async (cid, completo) => { // funcion para recibir la apy
     try {
         const response = await fetch(`http://localhost:3000/api/task/` + cid, {
-            method: 'PUT',
+            method: 'PUT', // segundo metodo put para editar la tarea
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -66,7 +66,7 @@ const deleteTask = async (ID) => {
     try {
         const deleteResponse = await fetch(`http://localhost:3000/api/task/${ID}`, {
             //recibe iD como parametro y lo concatena al API
-            method: 'DELETE'
+            method: 'DELETE' // metodo DELETE para eliminar elementos de el API
         });
         if (!deleteResponse.ok) {
             console.error("Error eliminando tarea");
