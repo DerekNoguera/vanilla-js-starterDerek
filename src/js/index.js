@@ -28,23 +28,23 @@ const actualizar = async () => {                        // funcion async para po
     contenedorTareas.innerHTML = "";
     data.forEach(e => {
         sinT.innerHTML = ""
-        let contenedor = document.createElement("div");
+        let contenedor = document.createElement("div"); // crea divs para cada tarea
         contenedor.className = "contenedor";
 
-        var checkbox = document.createElement("input");
+        var checkbox = document.createElement("input"); // crear un checkbox para cada tarea y se crea dentro de el div
         checkbox.className = "checkbox";
         checkbox.type = "checkbox";
         contenedor.appendChild(checkbox);
 
         checkbox.id = e.id
         let cid = checkbox.id
-        checkbox.addEventListener('click', async () => {
+        checkbox.addEventListener('click', async () => { // Una funcion async para validar cuando una tarea esta hecha o no
             if (checkbox.checked) {
                 putTask2(cid, "completo")
             } else {
                 putTask2(cid, "incompleto")
             }
-            location.reload()
+            location.reload() // recarga la pagina para que se actualice cada que se checkee el checkbox
         });
 
         if (e.check === "completo") {
@@ -53,35 +53,38 @@ const actualizar = async () => {                        // funcion async para po
                 contador.textContent++
             }
         }
-        let divs = document.createElement("h2");
+        let divs = document.createElement("h2"); // crea e texto de la tarea 
         divs.className = "tareas";
         divs.innerHTML = e.Task;
         contenedor.appendChild(divs);
         divs.addEventListener("click", () => {
-            let inputEdit = document.createElement("input")
+            let inputEdit = document.createElement("input")// al tocar el campo de texto te permite editar la tarea
             inputEdit.type = "text"
             inputEdit.placeholder = "Reescribe tu tarea"
             inputEdit.className = "textEdit"
             contenedor.appendChild(inputEdit);
             inputEdit.addEventListener("keypress", async (event) => {
-
+                // funcion de el input que edita la tarea se puede usar con la tecla ENTER
                 if (event.key == "Enter") {
                     if (inputEdit.value.trim() === "") {
                         alert("No puedes dejar campos en blanco")
                     } else {
                         divs.textContent = inputEdit.value
                         let parametroDivs = divs.textContent
+                        // el contenido de el input se reescribe en pantalla
                         divs.id = e.id
 
                         let idPutTask = divs.id
                         contenedor.removeChild(inputEdit)
                         console.log(parametroDivs)
                         putTask(idPutTask,parametroDivs)
+                        // se le envian como parametro el valor de el input y el ID a el PUT
                     }
                 }
             })
         })
         let eliminar = document.createElement("img");
+        //crea una imagen
         eliminar.src = "https://img.icons8.com/?size=60&id=67884&format=png"
         eliminar.alt = "error"
 
@@ -91,6 +94,7 @@ const actualizar = async () => {                        // funcion async para po
         contenedor.appendChild(eliminar);
 
         eliminar.addEventListener("click", async () => {
+            // la funcion de la imagen es Eliminar de el API y de la parte visual y tambien elimina toda la tarea
             const ID = eliminar.dataset.taskId; // se guarda en taskId el valor de contenedor.dataset.taskId que es e.id
             await deleteTask(ID);// se llama la funcion deleteTask(taskId) para que elimine de la API el elemento encontra con el taskId que es el ID
             // se le envia el id como parametro para que lo reciba en la API
